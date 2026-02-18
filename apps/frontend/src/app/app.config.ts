@@ -14,7 +14,8 @@ import {
   ExperimentOutline, FileOutline, SaveOutline, CameraOutline, FormOutline, CloseOutline,
   LoadingOutline, EyeOutline, EyeInvisibleOutline, InfoCircleOutline,
   UserAddOutline, StopOutline, TeamOutline, SendOutline, SyncOutline, SearchOutline,
-  SettingOutline, BellOutline, StarOutline, StarFill, HeartOutline, DownloadOutline
+  SettingOutline, BellOutline, StarOutline, StarFill, HeartOutline, DownloadOutline,
+  MenuOutline
 } from '@ant-design/icons-angular/icons';
 
 import { routes } from './app.routes';
@@ -32,8 +33,12 @@ const icons = [
   ExperimentOutline, FileOutline, SaveOutline, CameraOutline, FormOutline, CloseOutline,
   LoadingOutline, EyeOutline, EyeInvisibleOutline, InfoCircleOutline,
   UserAddOutline, StopOutline, TeamOutline, SendOutline, SyncOutline, SearchOutline,
-  SettingOutline, BellOutline, StarOutline, StarFill, HeartOutline, DownloadOutline
+  SettingOutline, BellOutline, StarOutline, StarFill, HeartOutline, DownloadOutline,
+  MenuOutline
 ];
+
+import { provideServiceWorker } from '@angular/service-worker';
+import { isDevMode } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,6 +49,10 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideNzIcons(icons),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     // Ng-Zorro i18n - Portuguese Brazil
     { provide: NZ_I18N, useValue: pt_BR }
   ]

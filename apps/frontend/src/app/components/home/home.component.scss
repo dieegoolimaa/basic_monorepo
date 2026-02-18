@@ -204,16 +204,18 @@
         padding: 2rem 0;
         scrollbar-width: none;
         scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; /* SMOOTH TOUCH SCROLL */
         &::-webkit-scrollbar { display: none; }
     }
 
     .showcase-container {
         display: flex;
-        justify-content: center; /* CENTER CARDS ON PAGE */
+        justify-content: flex-start; /* FIX: 'center' locks scroll on overflow */
         gap: 30px;
         height: 650px;
         width: max-content;
         min-width: 100%;
+        padding: 0 4vw; /* Inner padding for the flex container */
     }
 
     .showcase-card {
