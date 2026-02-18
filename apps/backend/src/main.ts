@@ -19,10 +19,19 @@ async function bootstrap() {
     'http://localhost:3000',
     'https://basic-frontend-seven.vercel.app',
     process.env.FRONTEND_URL,
-  ].filter(Boolean); // Remove undefined values
+  ].filter(Boolean);
+
+  const logger = new Logger('Bootstrap');
 
   app.enableCors({
-    origin: allowedOrigins,
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.onrender.com') || origin.includes('localhost')) {
+        callback(null, true);
+      } else {
+        logger.warn(`Origin blocked by CORS: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
@@ -87,7 +96,6 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   await app.listen(port);
 
-  const logger = new Logger('Bootstrap');
   logger.log(`🚀 Server running on port ${port}`);
   logger.log(`📚 API docs available at /api/docs`);
 }
