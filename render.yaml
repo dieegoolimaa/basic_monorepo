@@ -3,9 +3,8 @@ services:
   - type: web
     name: basic-backend
     runtime: node
-    rootDir: apps/backend
-    buildCommand: npm install && npm run build
-    startCommand: npm run start:prod
+    buildCommand: npm install && npx turbo run build --filter=basic-backend
+    startCommand: cd apps/backend && npm run start:prod
     envVars:
       - key: NODE_ENV
         value: production
@@ -31,11 +30,11 @@ services:
         sync: false
 
   # ─── FRONTEND (Angular SPA) ───
-  - type: static
+  - type: web
     name: basic-frontend
-    rootDir: apps/frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist/nail-art-academy/browser
+    runtime: static
+    buildCommand: npm install && npx turbo run build --filter=basic-frontend
+    staticPublishPath: apps/frontend/dist/nail-art-academy/browser
     headers:
       - path: /*
         name: Cache-Control
