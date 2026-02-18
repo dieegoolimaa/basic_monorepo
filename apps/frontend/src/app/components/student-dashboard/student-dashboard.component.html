@@ -1,0 +1,70 @@
+<div class="dashboard-container fade-in">
+    <div class="welcome-section">
+        <p class="welcome-text">Bem-vinda de volta</p>
+        <h1>Olá, {{ userName }}</h1>
+    </div>
+
+    <!-- Course Progress Cards -->
+    <div class="section-header">
+        <h2>Minhas Formações</h2>
+        <span class="course-count">{{ enrolledCourses.length }} {{ enrolledCourses.length === 1 ? 'formaçāo' :
+            'formações' }}</span>
+    </div>
+
+    <div *ngIf="enrolledCourses.length === 0" class="empty-state">
+        <span nz-icon nzType="inbox" class="empty-icon"></span>
+        <p>Você ainda não tem acesso a nenhum curso.</p>
+        <p class="empty-hint">Entre em contato para adquirir uma formação.</p>
+    </div>
+
+    <div class="courses-grid">
+        @for(course of enrolledCourses; track course._id) {
+        <div class="course-card">
+            <div class="card-image">
+                <img [src]="course.thumbnailUrl" [alt]="course.title"
+                    onerror="this.src='https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800'" />
+                <div class="progress-overlay">
+                    <div class="progress-bar">
+                        <div class="progress-fill" [style.width]="getProgress(course._id) + '%'"></div>
+                    </div>
+                    <span class="progress-text">{{ getProgress(course._id) }}% concluído</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <h3 class="course-title">{{ course.title }}</h3>
+                <p class="course-meta">
+                    <span><span nz-icon nzType="read"></span> {{ course.modules.length }} módulos</span>
+                    <span><span nz-icon nzType="play-circle"></span> {{ getTotalLessons(course) }} aulas</span>
+                </p>
+            </div>
+
+            <div class="card-footer">
+                <div class="next-lesson" *ngIf="getNextLesson(course) as next">
+                    <small>Próxima:</small>
+                    <span>{{ next }}</span>
+                </div>
+                <button nz-button nzType="primary" [routerLink]="['/player', course._id]" class="btn-continue">
+                    {{ getProgress(course._id) > 0 ? 'Continuar' : 'Começar' }}
+                    <span nz-icon nzType="arrow-right"></span>
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-section" *ngIf="enrolledCourses.length > 0">
+        <div class="stat-item">
+            <span class="stat-value">{{ getTotalCompletedLessons() }}</span>
+            <span class="stat-label">Aulas completas</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value">{{ getTotalHours() }}</span>
+            <span class="stat-label">Horas de estudo</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value">{{ getCertificatesCount() }}</span>
+            <span class="stat-label">Conquistas</span>
+        </div>
+    </div>
+</div>

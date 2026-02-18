@@ -1,0 +1,82 @@
+<nz-modal [nzVisible]="isVisible" [nzClosable]="false" [nzMaskClosable]="false" nzClassName="review-modal-lux"
+    (nzOnCancel)="close()">
+
+    <div *nzModalTitle></div>
+
+    <ng-container *nzModalContent>
+        <div class="review-frame animate-in">
+            <!-- Close Button -->
+            <button class="close-lux" (click)="close()">
+                <span nz-icon nzType="close"></span>
+            </button>
+
+            <div class="review-content">
+                <!-- Header Section -->
+                <div class="header-section">
+                    <div class="celebration-badge">
+                        <span nz-icon nzType="check-circle" nzTheme="fill"></span>
+                    </div>
+                    <span class="uptitle">CONQUISTA ALCANÇADA</span>
+                    <h2 class="main-title">Parabéns pela conclusão!</h2>
+                    <p class="course-ref">Você finalizou com maestria o curso <strong>{{ courseName }}</strong></p>
+                    <div class="gold-separator"></div>
+                </div>
+
+                <!-- Rating Section -->
+                <div class="body-section">
+                    <div class="rating-feedback">
+                        <h3 class="section-label">Sua Experiência</h3>
+                        <p class="section-hint">Como você avalia este conteúdo?</p>
+
+                        <div class="stars-lux">
+                            @for (star of [1, 2, 3, 4, 5]; track star) {
+                            <button class="star-item" [class.active]="rating() >= star"
+                                (mouseenter)="hoverRating = star" (mouseleave)="hoverRating = 0"
+                                (click)="setRating(star)">
+                                <span nz-icon nzType="star"
+                                    [nzTheme]="(hoverRating >= star || rating() >= star) ? 'fill' : 'outline'"></span>
+                            </button>
+                            }
+                        </div>
+                        <div class="rating-status" [class.visible]="rating() > 0">
+                            {{ getRatingText() }}
+                        </div>
+                    </div>
+
+                    <!-- Comment Input -->
+                    <div class="input-group-lux">
+                        <label>SUA OPINIÃO IMPORTA (OPCIONAL)</label>
+                        <div class="textarea-wrapper">
+                            <textarea nz-input [ngModel]="comment()" (ngModelChange)="comment.set($event)"
+                                placeholder="Descreva sua experiência com o curso..." [rows]="3"></textarea>
+                            <div class="input-focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Anonymous Toggle -->
+                    <div class="toggle-group-lux">
+                        <label nz-checkbox [ngModel]="isAnonymous()" (ngModelChange)="isAnonymous.set($event)">
+                            <span class="checkbox-text">Apresentar avaliação anonimamente</span>
+                        </label>
+                        <span class="helper-text">Sua identidade será preservada publicamente.</span>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="footer-actions">
+                    <button class="btn-skip" (click)="close()">Pular por enquanto</button>
+                    <button class="btn-submit" [class.loading]="isSubmitting()" [disabled]="rating() === 0"
+                        (click)="submit()">
+                        @if (isSubmitting()) {
+                        <span nz-icon nzType="loading"></span>
+                        } @else {
+                        {{ existingReview() ? 'ATUALIZAR' : 'ENVIAR AVALIAÇÃO' }}
+                        }
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div *nzModalFooter></div>
+</nz-modal>

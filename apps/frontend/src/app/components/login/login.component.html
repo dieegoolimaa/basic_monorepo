@@ -1,0 +1,43 @@
+<div class="login-wrapper">
+    <div class="login-card fade-in">
+        <div class="brand-header">
+            <div class="logo">basic.</div>
+            <p class="subtitle">Faça login para continuar sua jornada.</p>
+        </div>
+
+        <form nz-form (ngSubmit)="submitForm()" class="login-form">
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Por favor insira seu email">
+                    <nz-input-group [nzPrefix]="prefixUser">
+                        <input nz-input placeholder="Email" [(ngModel)]="email" name="email" required
+                            class="custom-input" />
+                    </nz-input-group>
+                    <ng-template #prefixUser><span nz-icon nzType="mail" class="input-icon"></span></ng-template>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Por favor insira sua senha">
+                    <nz-input-group [nzPrefix]="prefixLock">
+                        <input nz-input type="password" placeholder="Senha" [(ngModel)]="password" name="password"
+                            required class="custom-input" />
+                    </nz-input-group>
+                    <ng-template #prefixLock><span nz-icon nzType="lock" class="input-icon"></span></ng-template>
+                </nz-form-control>
+            </nz-form-item>
+
+            <div class="forgot-password">
+                <a routerLink="/esqueci-senha" class="forgot-link">Esqueci minha senha</a>
+            </div>
+
+            <button nz-button nzType="primary" nzBlock nzSize="large" [nzLoading]="isLoading" class="btn-submit">
+                Entrar
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <span>Não tem conta?</span>
+            <a routerLink="/registro" class="link-contact">Criar conta com código</a>
+        </div>
+    </div>
+</div>

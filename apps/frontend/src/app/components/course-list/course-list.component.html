@@ -1,0 +1,28 @@
+<div class="courses-list-page detail-container">
+    <div class="container list-header reveal">
+        <h1 class="serif">Nossas Formações</h1>
+        <p>EXPLORE NOSSOS TREINAMENTOS EXCLUSIVOS E MENTORIAS.</p>
+    </div>
+
+    <div class="courses-grid container">
+        @for (course of courses(); track course._id) {
+        <div class="course-card reveal" (click)="viewCourse(course._id)">
+            <div class="img-container">
+                <img [alt]="course.title" [src]="course.thumbnailUrl" />
+            </div>
+            <div class="card-content">
+                <span class="tag">MENTORIA MASTER</span>
+                <h3 class="serif">{{ course.title }}</h3>
+                <p class="desc">{{ course.description }}</p>
+                <div class="card-footer">
+                    <span class="price">SOLICITAR ACESSO</span>
+                    <div class="btn-view">
+                        <span>EXPLORAR</span>
+                        <span nz-icon nzType="arrow-right"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

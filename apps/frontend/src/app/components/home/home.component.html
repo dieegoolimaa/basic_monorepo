@@ -1,0 +1,137 @@
+<!-- WELCOME HERO SECTION -->
+<section class="welcome-hero" [style.backgroundImage]="'url(' + getFullUrl(settings()?.welcomeImageUrl) + ')'">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-top-tags reveal">
+            <span class="tag-left">{{ settings()?.heroTagLeft || 'MENTORIA' }}</span>
+            <span class="tag-right">{{ settings()?.heroTagRight || 'CRIS SOUZA' }}</span>
+        </div>
+        <h1 class="hero-main-title serif reveal">{{ settings()?.heroTitle || 'BEM VINDA' }}</h1>
+    </div>
+
+    <div class="scroll-indicator reveal">
+        <div class="mouse"></div>
+        <span>EXPLORAR</span>
+    </div>
+</section>
+
+<!-- CINEMATIC COURSE SHOWCASE -->
+<section class="luxury-showcase">
+    <div class="showcase-header reveal">
+        <span class="gold-tag">{{ settings()?.coursesTag || 'MASTERCLASS SERIES' }}</span>
+        <h2 class="showcase-title serif">{{ settings()?.coursesTitle || 'Formações de Elite' }}</h2>
+    </div>
+
+    <div class="showcase-outer reveal">
+        <button class="nav-btn prev" (click)="prevSlide()" [class.hidden]="!shouldShowNav()">
+            <span nz-icon nzType="left"></span>
+        </button>
+
+        <div class="showcase-wrapper">
+            <div class="showcase-container">
+                @for (course of featuredCourses(); track course._id) {
+                <div class="showcase-card" [routerLink]="['/formacoes', course._id]">
+                    <!-- Background Image -->
+                    <div class="card-bg">
+                        <img [src]="getFullUrl(course.imageUrl || course.thumbnailUrl)" [alt]="course.title">
+                        <div class="card-overlay"></div>
+                    </div>
+
+                    <!-- Floating Content -->
+                    <div class="card-content">
+                        <div class="content-top">
+                            <span class="instructor-badge">{{ course.instructor || 'BASIC STUDIO' }}</span>
+                        </div>
+
+                        <div class="content-main">
+                            <div class="expand-logic">
+                                <p class="course-brief">{{ course.description }}</p>
+                                <div class="premium-cta">
+                                    <span>VER CURSO</span>
+                                    <div class="cta-circle">
+                                        <span nz-icon nzType="arrow-right"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="course-name serif">{{ course.title }}</h3>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <button class="nav-btn next" (click)="nextSlide()" [class.hidden]="!shouldShowNav()">
+            <span nz-icon nzType="right"></span>
+        </button>
+    </div>
+</section>
+
+<!-- THE PHILOSOPHY SECTION (NEW) -->
+<section class="philosophy-section section-padding">
+    <div class="container">
+        <div class="philosophy-grid">
+            <div class="philosophy-item reveal">
+                <span class="phi-num">01</span>
+                <h3>{{ settings()?.philosophyTitle1 || 'EXCLUSIVIDADE' }}</h3>
+                <p>{{ settings()?.philosophyDesc1 || 'Metodologias únicas desenhadas para elevar o seu padrão
+                    profissional ao topo do mercado.' }}</p>
+            </div>
+            <div class="philosophy-item reveal">
+                <span class="phi-num">02</span>
+                <h3>{{ settings()?.philosophyTitle2 || 'MAESTRIA' }}</h3>
+                <p>{{ settings()?.philosophyDesc2 || 'O domínio técnico aliado ao olhar artístico que diferencia uma
+                    profissional comum de uma referência.' }}</p>
+            </div>
+            <div class="philosophy-item reveal">
+                <span class="phi-num">03</span>
+                <h3>{{ settings()?.philosophyTitle3 || 'LEGADO' }}</h3>
+                <p>{{ settings()?.philosophyDesc3 || 'Não formamos apenas técnicos, construímos carreiras sólidas e
+                    marcas pessoais inesquecíveis.' }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION (Refined) -->
+<section class="about-section section-padding">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-image-side reveal">
+                <div class="image-reveal-wrapper">
+                    <div class="image-frame">
+                        <img [src]="getFullUrl(settings()?.aboutImageUrl)" alt="Cris Souza" />
+                    </div>
+                    <div class="decorative-box"></div>
+                </div>
+            </div>
+
+            <div class="about-content-side reveal">
+                <span class="tag">{{ settings()?.aboutTag || 'A FUNDADORA' }}</span>
+                <h2 class="section-title">{{ settings()?.aboutTitle || 'A Maestria por trás da Basic' }}</h2>
+                <div class="gold-divider"></div>
+
+                <div class="about-text">
+                    <p class="lead-text">{{ settings()?.aboutParagraph1 }}</p>
+                    <p>{{ settings()?.aboutParagraph2 }}</p>
+                </div>
+
+                <div class="stats-elegant">
+                    <div class="stat-item">
+                        <div class="val">{{ settings()?.experienceYears || '10+' }}</div>
+                        <div class="lbl">ANOS DE MASTERIA</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="val">{{ settings()?.studentsFormed || '5K+' }}</div>
+                        <div class="lbl">VIDAS TRANSFORMADAS</div>
+                    </div>
+                </div>
+
+                <div class="signature-area">
+                    <p class="founder-name">{{ settings()?.founderName || 'Cris Souza' }}</p>
+                    <span class="founder-role">Founder & Lead Educator</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

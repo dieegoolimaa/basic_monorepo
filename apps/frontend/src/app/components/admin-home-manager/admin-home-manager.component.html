@@ -1,0 +1,305 @@
+<div class="page-container fade-in">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Configurações da Home</h1>
+            <p class="page-subtitle">Personalize a identidade visual e os textos da página inicial.</p>
+        </div>
+        <button nz-button nzType="primary" class="btn-save" (click)="$event.stopPropagation(); saveSettings()"
+            [nzLoading]="isSavingSettings">
+            <span nz-icon nzType="save" *ngIf="!isSavingSettings"></span>
+            {{ isSavingSettings ? 'SALVANDO...' : 'SALVAR ALTERAÇÕES' }}
+        </button>
+    </div>
+
+    <div *ngIf="isLoadingSettings" class="global-loading">
+        <span nz-icon nzType="loading" class="loading-icon"></span>
+        <p>Carregando configurações...</p>
+    </div>
+
+    <!-- Tabs -->
+    <nz-tabset nzType="card" class="home-tabs" *ngIf="!isLoadingSettings">
+        <!-- Tab: Hero -->
+        <nz-tab nzTitle="Seção Inicial (Hero)">
+            <div class="tab-header">
+                <p>Configure a imagem de boas-vindas exibida no topo da página inicial.</p>
+            </div>
+
+            <div class="settings-grid single-col">
+                <nz-card nzTitle="Foto de Bem-vinda" class="settings-card">
+                    <div class="row-flex mb-2">
+                        <div class="form-section flex-1 mr-1">
+                            <label class="form-label">Texto Esquerda (Ex: MENTORIA)</label>
+                            <input nz-input [(ngModel)]="settingsForm.heroTagLeft" placeholder="MENTORIA" />
+                        </div>
+                        <div class="form-section flex-1">
+                            <label class="form-label">Texto Direita (Ex: CRIS SOUZA)</label>
+                            <input nz-input [(ngModel)]="settingsForm.heroTagRight" placeholder="CRIS SOUZA" />
+                        </div>
+                    </div>
+                    <div class="form-section mb-2">
+                        <label class="form-label">Título Principal (Ex: BEM VINDA)</label>
+                        <input nz-input [(ngModel)]="settingsForm.heroTitle" placeholder="BEM VINDA" />
+                    </div>
+
+                    <nz-upload nzType="drag" [nzCustomRequest]="handleWelcomeImageUpload" [nzShowUploadList]="false"
+                        class="hero-image-upload" [class.has-image]="settingsForm.welcomeImageUrl"
+                        [class.is-uploading]="isUploadingWelcome">
+                        <div class="upload-content">
+                            <div class="loader-overlay" *ngIf="isUploadingWelcome">
+                                <span nz-icon nzType="loading" class="loader-icon"></span>
+                                <p>Carregando...</p>
+                            </div>
+
+                            @if (settingsForm.welcomeImageUrl && !isUploadingWelcome) {
+                            <div class="preview-container">
+                                <img [src]="getFullUrl(settingsForm.welcomeImageUrl)" alt="Welcome Image"
+                                    class="upload-preview" />
+                                <div class="preview-overlay">
+                                    <span nz-icon nzType="camera" class="overlay-icon"></span>
+                                    <span>Alterar foto de boas-vindas</span>
+                                </div>
+                            </div>
+                            } @else if (!isUploadingWelcome) {
+                            <div class="upload-placeholder">
+                                <span nz-icon nzType="cloud-upload" class="upload-icon"></span>
+                                <p class="upload-text">Arraste ou clique para upload da foto principal</p>
+                                <p class="upload-hint">
+                                    <strong>Recomendação:</strong> Alta resolução (16:9)<br>
+                                    <strong>Formatos:</strong> JPG, PNG ou WebP
+                                </p>
+                            </div>
+                            }
+                        </div>
+                    </nz-upload>
+                </nz-card>
+            </div>
+
+            <div class="settings-footer">
+                <button nz-button nzType="primary" nzSize="large" (click)="saveSettings()"
+                    [nzLoading]="isSavingSettings">
+                    <span nz-icon nzType="save"></span>
+                    Salvar Foto Hero
+                </button>
+            </div>
+        </nz-tab>
+
+        <!-- Tab: Sobre -->
+        <nz-tab nzTitle="Seção Sobre">
+            <div class="tab-header">
+                <p>Configure a seção "Sobre" exibida na página inicial.</p>
+            </div>
+
+            <div class="settings-grid">
+                <!-- Left Column: Image -->
+                <nz-card nzTitle="Imagem da Seção" class="settings-card">
+                    <nz-upload nzType="drag" [nzCustomRequest]="handleAboutImageUpload" [nzShowUploadList]="false"
+                        class="about-image-upload" [class.has-image]="settingsForm.aboutImageUrl"
+                        [class.is-uploading]="isUploadingAbout">
+                        <div class="upload-content">
+                            <div class="loader-overlay" *ngIf="isUploadingAbout">
+                                <span nz-icon nzType="loading" class="loader-icon"></span>
+                                <p>Carregando...</p>
+                            </div>
+
+                            @if (settingsForm.aboutImageUrl && !isUploadingAbout) {
+                            <div class="preview-container">
+                                <img [src]="getFullUrl(settingsForm.aboutImageUrl)" alt="About Image"
+                                    class="upload-preview" />
+                                <div class="preview-overlay">
+                                    <span nz-icon nzType="camera" class="overlay-icon"></span>
+                                    <span>Alterar imagem</span>
+                                </div>
+                            </div>
+                            } @else if (!isUploadingAbout) {
+                            <div class="upload-placeholder">
+                                <span nz-icon nzType="cloud-upload" class="upload-icon"></span>
+                                <p class="upload-text">Arraste ou clique para upload</p>
+                                <p class="upload-hint">
+                                    <strong>Dimensão:</strong> 800 × 600 pixels<br>
+                                    <strong>Formatos:</strong> JPG, PNG ou WebP
+                                </p>
+                            </div>
+                            }
+                        </div>
+                    </nz-upload>
+                </nz-card>
+
+                <!-- Right Column: Content -->
+                <nz-card nzTitle="Conteúdo" class="settings-card">
+                    <div class="form-section">
+                        <label class="form-label">Tag da Seção</label>
+                        <input nz-input [(ngModel)]="settingsForm.aboutTag" placeholder="Ex: Sobre a Basic Studio" />
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label">Título Principal</label>
+                        <input nz-input [(ngModel)]="settingsForm.aboutTitle"
+                            placeholder="Ex: Formando Nail Artists em Portugal" />
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label">Parágrafo 1</label>
+                        <textarea nz-input [(ngModel)]="settingsForm.aboutParagraph1" [nzAutosize]="{ minRows: 3 }"
+                            placeholder="Primeiro parágrafo descritivo..."></textarea>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label">Parágrafo 2</label>
+                        <textarea nz-input [(ngModel)]="settingsForm.aboutParagraph2" [nzAutosize]="{ minRows: 3 }"
+                            placeholder="Segundo parágrafo descritivo..."></textarea>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="form-label">Nome da Fundadora</label>
+                        <input nz-input [(ngModel)]="settingsForm.founderName" placeholder="Ex: Cris Souza" />
+                    </div>
+                </nz-card>
+
+                <!-- Stats Card -->
+                <nz-card nzTitle="Estatísticas" class="settings-card stats-card">
+                    <div class="stats-grid">
+                        <div class="form-section">
+                            <label class="form-label">Anos de Experiência</label>
+                            <input nz-input [(ngModel)]="settingsForm.experienceYears" placeholder="Ex: 10+" />
+                        </div>
+                        <div class="form-section">
+                            <label class="form-label">Alunas Formadas</label>
+                            <input nz-input [(ngModel)]="settingsForm.studentsFormed" placeholder="Ex: 5k+" />
+                        </div>
+                        <div class="form-section">
+                            <label class="form-label">Avaliação Média</label>
+                            <input nz-input [(ngModel)]="settingsForm.averageRating" placeholder="Ex: 4.9" />
+                        </div>
+                    </div>
+                </nz-card>
+            </div>
+
+            <div class="settings-grid">
+                <!-- Courses Section -->
+                <nz-card nzTitle="Seção de Cursos" class="settings-card">
+                    <div class="form-section">
+                        <label class="form-label">Tag da Seção</label>
+                        <input nz-input [(ngModel)]="settingsForm.coursesTag" placeholder="Ex: MASTERCLASS SERIES" />
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Título da Seção</label>
+                        <input nz-input [(ngModel)]="settingsForm.coursesTitle" placeholder="Ex: Formações de Elite" />
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Texto do Botão no Carrossel</label>
+                        <input nz-input [(ngModel)]="settingsForm.carouselButtonText"
+                            placeholder="Ex: DESCUBRA O MODO BASIC" />
+                    </div>
+                </nz-card>
+
+                <!-- Philosophy Section -->
+                <nz-card nzTitle="Seção de Filosofia" class="settings-card">
+                    <div class="form-section">
+                        <label class="form-label">Item 01 - Título</label>
+                        <input nz-input [(ngModel)]="settingsForm.philosophyTitle1" />
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Item 01 - Descrição</label>
+                        <textarea nz-input [(ngModel)]="settingsForm.philosophyDesc1"
+                            [nzAutosize]="{ minRows: 2 }"></textarea>
+                    </div>
+                    <nz-divider></nz-divider>
+                    <div class="form-section">
+                        <label class="form-label">Item 02 - Título</label>
+                        <input nz-input [(ngModel)]="settingsForm.philosophyTitle2" />
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Item 02 - Descrição</label>
+                        <textarea nz-input [(ngModel)]="settingsForm.philosophyDesc2"
+                            [nzAutosize]="{ minRows: 2 }"></textarea>
+                    </div>
+                    <nz-divider></nz-divider>
+                    <div class="form-section">
+                        <label class="form-label">Item 03 - Título</label>
+                        <input nz-input [(ngModel)]="settingsForm.philosophyTitle3" />
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Item 03 - Descrição</label>
+                        <textarea nz-input [(ngModel)]="settingsForm.philosophyDesc3"
+                            [nzAutosize]="{ minRows: 2 }"></textarea>
+                    </div>
+                </nz-card>
+
+
+            </div>
+
+            <div class="settings-footer">
+                <button nz-button nzType="primary" nzSize="large" (click)="saveSettings()"
+                    [nzLoading]="isSavingSettings">
+                    <span nz-icon nzType="save"></span>
+                    Salvar Configurações
+                </button>
+            </div>
+        </nz-tab>
+
+        <!-- Tab: Avaliações -->
+        <nz-tab nzTitle="Avaliações">
+            <div class="tab-description">
+                <p>Visualize todas as avaliações e feedbacks dos alunos sobre os cursos.</p>
+            </div>
+
+            <div class="responsive-table-wrapper">
+                <div class="table-card">
+                    <nz-table #reviewsTable [nzData]="reviews" [nzBordered]="false" [nzShowPagination]="true"
+                        [nzLoading]="isLoadingReviews" nzSize="middle" [nzPageSize]="10">
+                        <thead>
+                            <tr>
+                                <th nzWidth="200px">Curso</th>
+                                <th nzWidth="180px">Aluno</th>
+                                <th nzWidth="100px" nzAlign="center">Nota</th>
+                                <th>Comentário</th>
+                                <th nzWidth="120px">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let review of reviewsTable.data">
+                                <td>
+                                    <div class="course-info-cell">
+                                        <span class="course-title">{{ review.courseId.title }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if (review.isAnonymous) {
+                                    <span class="anonymous-badge">Anônimo</span>
+                                    } @else {
+                                    <span class="user-name">{{ review.userId.name }}</span>
+                                    <span class="user-email">{{ review.userId.email }}</span>
+                                    }
+                                </td>
+                                <td nzAlign="center">
+                                    <div class="rating-display">
+                                        @for (star of [1,2,3,4,5]; track star) {
+                                        <span nz-icon nzType="star"
+                                            [nzTheme]="star <= review.rating ? 'fill' : 'outline'"
+                                            [class.filled]="star <= review.rating"></span>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="comment-text">{{ review.comment || '-' }}</p>
+                                </td>
+                                <td>
+                                    <span class="date-text">{{ review.createdAt | date:'dd/MM/yyyy' }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+            </div>
+
+
+            @if (reviews.length === 0 && !isLoadingReviews) {
+            <div class="empty-reviews">
+                <span nz-icon nzType="star" class="empty-icon"></span>
+                <p>Nenhuma avaliação ainda</p>
+                <p class="hint">As avaliações aparecerão aqui quando os alunos completarem os cursos.</p>
+            </div>
+            }
+        </nz-tab>
+    </nz-tabset>
+</div>

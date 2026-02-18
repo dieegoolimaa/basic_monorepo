@@ -1,0 +1,31 @@
+{
+  "name": "basic-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@10.8.2",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "build:backend": "turbo run build --filter=basic-backend",
+    "build:frontend": "turbo run build --filter=basic-frontend",
+    "dev:backend": "turbo run dev --filter=basic-backend",
+    "dev:frontend": "turbo run dev --filter=basic-frontend",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0"
+  },
+  "overrides": {
+    "basic-frontend": {
+      "typescript": "~5.5.2"
+    }
+  }
+}

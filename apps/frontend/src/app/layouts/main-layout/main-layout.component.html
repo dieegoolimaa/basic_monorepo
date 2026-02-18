@@ -1,0 +1,59 @@
+<nz-layout class="layout">
+    <header class="site-header">
+        <div class="header-container">
+            <a routerLink="/" class="logo">basic</a>
+
+            <nav class="main-nav" [class.mobile-open]="isMobileMenuOpen()">
+                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link"
+                    (click)="closeMobileMenu()">Home</a>
+                <a routerLink="/formacoes" routerLinkActive="active" class="nav-link"
+                    (click)="closeMobileMenu()">Formações</a>
+                <!-- Dashboard for students -->
+                <a *ngIf="isLoggedIn() && !isAdmin()" routerLink="/meus-cursos" routerLinkActive="active"
+                    class="nav-link" (click)="closeMobileMenu()">Meus Cursos</a>
+                <!-- Admin link only for admins -->
+                <a *ngIf="isAdmin()" routerLink="/admin/home" routerLinkActive="active" class="nav-link admin-link"
+                    (click)="closeMobileMenu()">Admin</a>
+
+                <!-- Auth Area inside mobile menu -->
+                <div class="mobile-auth" *ngIf="isMobileMenuOpen()">
+                    <ng-container *ngIf="!isLoggedIn(); else mobileLoggedInTemplate">
+                        <a routerLink="/login" class="nav-link" (click)="closeMobileMenu()">Entrar</a>
+                        <a routerLink="/registro" class="btn-register" (click)="closeMobileMenu()">Criar Conta</a>
+                    </ng-container>
+                    <ng-template #mobileLoggedInTemplate>
+                        <span class="user-greeting">Olá, {{ userName() }}</span>
+                        <a (click)="logout()" class="nav-link">Sair</a>
+                    </ng-template>
+                </div>
+            </nav>
+
+            <div class="auth-area desktop-only">
+                <ng-container *ngIf="!isLoggedIn(); else loggedInTemplate">
+                    <a routerLink="/login" class="btn-login">Entrar</a>
+                    <a routerLink="/registro" class="btn-register">Criar Conta</a>
+                </ng-container>
+                <ng-template #loggedInTemplate>
+                    <span class="user-greeting">Olá, {{ userName() }}</span>
+                    <button (click)="logout()" class="btn-logout">Sair</button>
+                </ng-template>
+            </div>
+
+            <button class="menu-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen()">
+                <span nz-icon [nzType]="isMobileMenuOpen() ? 'close' : 'menu'"></span>
+            </button>
+
+        </div>
+    </header>
+
+    <nz-content>
+        <router-outlet></router-outlet>
+    </nz-content>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">basic</div>
+            <span class="footer-copy">© 2025 Todos os direitos reservados</span>
+        </div>
+    </footer>
+</nz-layout>

@@ -1,0 +1,30 @@
+<div class="admin-layout">
+    <header class="admin-header">
+        <div class="header-content">
+            <a routerLink="/" class="logo">Basic Management</a>
+            <nav class="nav-tabs">
+                <a routerLink="/admin/home" routerLinkActive="active" class="tab-item">
+                    <span nz-icon nzType="home"></span> Home
+                </a>
+                <a routerLink="/admin/courses" routerLinkActive="active" class="tab-item">
+                    <span nz-icon nzType="read"></span> Cursos
+                </a>
+                <a routerLink="/admin/users" routerLinkActive="active" class="tab-item">
+                    <span nz-icon nzType="user"></span> Alunas
+                </a>
+                <a routerLink="/admin/admins" routerLinkActive="active" class="tab-item">
+                    <span nz-icon nzType="safety-certificate"></span> Administradores
+                </a>
+            </nav>
+            <div class="header-actions">
+                <a routerLink="/" class="back-link">
+                    <span nz-icon nzType="arrow-left"></span> VOLTAR AO SITE
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <router-outlet></router-outlet>
+    </main>
+</div>

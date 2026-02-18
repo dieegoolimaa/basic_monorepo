@@ -1,0 +1,290 @@
+<div class="page-container fade-in">
+    <!-- LIST VIEW -->
+    <ng-container *ngIf="!isEditingMode">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Formações</h1>
+                <p class="page-subtitle">Gerencie o catálogo de cursos e conteúdos.</p>
+            </div>
+            <button nz-button nzType="primary" class="btn-create" (click)="createNewCourse()">
+                <span nz-icon nzType="plus"></span> Nova Formação
+            </button>
+        </div>
+
+        <div class="responsive-table-wrapper">
+            <div class="table-card">
+                <nz-table #basicTable [nzData]="courses" [nzLoading]="isLoading" [nzBordered]="false" nzSize="middle">
+                    <thead>
+                        <tr>
+                            <th nzWidth="230px">Capa</th>
+                            <th>Detalhes do Curso</th>
+                            <th nzWidth="150px">Conteúdo</th>
+                            <th nzWidth="120px">Status</th>
+                            <th nzWidth="150px" nzAlign="center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data">
+                            <td>
+                                <div class="thumb-wrapper">
+                                    <img [src]="getFullUrl(data.thumbnailUrl)" alt="Course thumb">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="course-info">
+                                    <span class="course-title">{{ data.title }}</span>
+                                    <span class="course-desc">{{ data.description }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <nz-tag class="custom-tag">{{ data.modules.length }} Módulos</nz-tag>
+                            </td>
+                            <td>
+                                <div class="status-badge"><span class="dot"></span> Ativo</div>
+                            </td>
+                            <td nzAlign="center">
+                                <div class="action-btns">
+                                    <button nz-button nzType="text" (click)="editCourse(data)" nz-tooltip
+                                        nzTooltipTitle="Editar">
+                                        <span nz-icon nzType="edit" style="font-size: 1.2rem;"></span>
+                                    </button>
+                                    <button nz-button nzType="text" nzDanger (click)="deleteCourse(data._id)" nz-tooltip
+                                        nzTooltipTitle="Remover">
+                                        <span nz-icon nzType="delete" style="font-size: 1.2rem;"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- EDITOR VIEW -->
+    <ng-container *ngIf="isEditingMode">
+        <div class="editor-header">
+            <button nz-button nzType="text" class="btn-back" (click)="cancelEdit()">
+                <span nz-icon nzType="arrow-left"></span> VOLTAR
+            </button>
+            <h2 class="editor-title">{{ currentCourse._id ? 'Editar' : 'Nova' }} Formação</h2>
+            <button nz-button nzType="primary" class="btn-save" (click)="saveCourse()" [nzLoading]="isLoading">
+                SALVAR
+            </button>
+        </div>
+
+        <div class="editor-layout">
+            <!-- Sidebar -->
+            <div class="editor-sidebar">
+                <nz-tabset [nzTabPosition]="'top'" nzType="line">
+                    <nz-tab nzTitle="Geral">
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label>Título</label>
+                                <input nz-input [(ngModel)]="currentCourse.title" placeholder="Nome do curso" />
+                            </div>
+                            <div class="form-group">
+                                <label>Capa</label>
+                                <nz-upload nzType="drag" [nzCustomRequest]="handleUpload" [nzShowUploadList]="false"
+                                    class="thumb-upload" [class.is-uploading]="isUploadingImage">
+                                    <div class="loader-overlay" *ngIf="isUploadingImage">
+                                        <span nz-icon nzType="loading" class="loader-icon"></span>
+                                        <p>Carregando...</p>
+                                    </div>
+                                    <img *ngIf="currentCourse.thumbnailUrl && !isUploadingImage"
+                                        [src]="currentCourse.thumbnailUrl" class="thumb-preview" />
+                                    <div *ngIf="!currentCourse.thumbnailUrl && !isUploadingImage"
+                                        class="thumb-placeholder">
+                                        <span nz-icon nzType="plus"></span>
+                                    </div>
+                                </nz-upload>
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <textarea nz-input [(ngModel)]="currentCourse.description" rows="4"
+                                    placeholder="Descreva o curso..."></textarea>
+                            </div>
+                        </div>
+                    </nz-tab>
+                    <nz-tab nzTitle="Estrutura">
+                        <div class="structure-section">
+                            <button nz-button nzType="dashed" nzBlock nzSize="small" (click)="addModule()">+
+                                Módulo</button>
+
+                            <nz-collapse [nzBordered]="false" class="module-collapse">
+                                <nz-collapse-panel *ngFor="let mod of currentCourse.modules; let i = index"
+                                    [nzHeader]="mod.title" [nzActive]="activeModuleIndex === i"
+                                    (nzActiveChange)="handleModuleClick(i)">
+
+                                    <div class="module-head">
+                                        <input nz-input nzSize="small" [(ngModel)]="mod.title"
+                                            placeholder="Nome do módulo" />
+                                        <button nz-button nzType="text" nzDanger nzSize="small"
+                                            (click)="removeModule(i); $event.stopPropagation()">
+                                            <span nz-icon nzType="delete"></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="lesson-list">
+                                        <div *ngFor="let lesson of mod.lessons" class="lesson-item"
+                                            [class.selected]="selectedLesson === lesson" (click)="selectLesson(lesson)">
+                                            <span nz-icon [nzType]="getIconForType(lesson.contentType || 'video')"
+                                                class="lesson-icon"></span>
+                                            <span class="lesson-name">{{ lesson.title }}</span>
+                                        </div>
+                                        <button nz-button nzType="text" nzSize="small" class="btn-add-lesson"
+                                            (click)="addLesson(i)">+ Aula</button>
+                                    </div>
+                                </nz-collapse-panel>
+                            </nz-collapse>
+                        </div>
+                    </nz-tab>
+                    <nz-tab nzTitle="Privilégios">
+                        <div class="form-section">
+                            <button nz-button nzType="dashed" nzBlock class="add-benefit-btn" (click)="addBenefit()">
+                                + Adicionar Privilégio
+                            </button>
+
+                            <div *ngFor="let benefit of currentCourse.benefits; let i = index"
+                                class="benefit-card fade-in">
+                                <div class="benefit-header-row">
+                                    <span class="benefit-label">Privilégio #{{i + 1}}</span>
+                                    <button nz-button nzType="text" nzDanger nzSize="small" (click)="removeBenefit(i)">
+                                        <span nz-icon nzType="delete"></span>
+                                    </button>
+                                </div>
+                                <div class="benefit-fields">
+                                    <input nz-input [(ngModel)]="benefit.title"
+                                        placeholder="Título (Ex: Acesso Vitalício)" />
+                                    <textarea nz-input [(ngModel)]="benefit.description" rows="2"
+                                        placeholder="Descrição curta..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </nz-tab>
+                </nz-tabset>
+            </div>
+
+            <!-- Main Content -->
+            <div class="editor-main">
+                <div *ngIf="!selectedLesson" class="empty-editor">
+                    <span nz-icon nzType="appstore" class="empty-icon"></span>
+                    <p>Selecione uma aula para editar.</p>
+                </div>
+
+                <div *ngIf="selectedLesson" class="lesson-editor">
+                    <input [(ngModel)]="selectedLesson.title" class="lesson-title-input" placeholder="Título da Aula" />
+
+                    <div class="lesson-meta">
+                        <nz-select [(ngModel)]="selectedLesson.contentType" style="width: 150px;">
+                            <nz-option nzValue="video" nzLabel="Vídeo"></nz-option>
+                            <nz-option nzValue="text" nzLabel="Texto"></nz-option>
+                            <nz-option nzValue="mixed" nzLabel="Misto"></nz-option>
+                            <nz-option nzValue="quiz" nzLabel="Quiz"></nz-option>
+                        </nz-select>
+                        <input nz-input [(ngModel)]="selectedLesson.duration" placeholder="Duração (00:00)"
+                            style="width: 100px;" />
+                    </div>
+
+                    <nz-divider></nz-divider>
+
+                    <!-- Text Content -->
+                    <div *ngIf="selectedLesson.contentType === 'text'" class="content-section">
+                        <label>Conteúdo de Texto</label>
+                        <textarea nz-input [(ngModel)]="selectedLesson.textContent" rows="12"
+                            placeholder="Digite o conteúdo da aula aqui... Você pode usar HTML básico para formatação."
+                            class="text-editor"></textarea>
+                    </div>
+
+                    <!-- Video -->
+                    <div *ngIf="selectedLesson.contentType === 'video' || selectedLesson.contentType === 'mixed'"
+                        class="content-section">
+                        <label>Vídeo da Aula</label>
+                        <div class="video-options">
+                            <nz-radio-group [(ngModel)]="videoInputType" class="video-type-selector">
+                                <label nz-radio nzValue="url">Link (YouTube/Vimeo)</label>
+                                <label nz-radio nzValue="file">Upload de Arquivo</label>
+                            </nz-radio-group>
+
+                            <div *ngIf="videoInputType === 'url'" class="video-url-input">
+                                <input nz-input [(ngModel)]="selectedLesson.videoUrl"
+                                    placeholder="https://youtube.com/embed/..." />
+                                <small class="field-hint">Cole o link de incorporação do YouTube ou Vimeo</small>
+                            </div>
+
+                            <div *ngIf="videoInputType === 'file'" class="video-file-input">
+                                <nz-upload [nzCustomRequest]="handleVideoUpload" [nzShowUploadList]="false"
+                                    nzAccept="video/*">
+                                    <button nz-button [nzLoading]="isUploadingVideo">
+                                        <span nz-icon nzType="cloud-upload" *ngIf="!isUploadingVideo"></span>
+                                        {{ isUploadingVideo ? 'Processando Vídeo...' : 'Selecionar Arquivo de Vídeo' }}
+                                    </button>
+                                </nz-upload>
+                                <div *ngIf="selectedLesson.videoUrl && videoInputType === 'file'"
+                                    class="uploaded-video-info">
+                                    <span nz-icon nzType="check-circle" style="color: #52c41a;"></span>
+                                    Vídeo carregado com sucesso
+                                </div>
+                                <small class="field-hint">Formatos suportados: MP4, WebM, MOV</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text for Mixed -->
+                    <div *ngIf="selectedLesson.contentType === 'mixed'" class="content-section">
+                        <label>Texto Complementar</label>
+                        <textarea nz-input [(ngModel)]="selectedLesson.textContent" rows="6"
+                            placeholder="Adicione texto complementar ao vídeo..." class="text-editor"></textarea>
+                    </div>
+
+                    <!-- Steps (Mixed) -->
+                    <div *ngIf="selectedLesson.contentType === 'mixed'" class="content-section">
+                        <label>Passos Práticos (Checklist)</label>
+                        <div *ngFor="let step of getSteps(selectedLesson); let sIdx = index" class="step-row">
+                            <span class="step-num">{{sIdx + 1}}</span>
+                            <input nz-input [(ngModel)]="step.description" placeholder="Descreva o passo..." />
+                            <button nz-button nzType="text" nzDanger nzSize="small"
+                                (click)="removeStep(selectedLesson, sIdx)">
+                                <span nz-icon nzType="close"></span>
+                            </button>
+                        </div>
+                        <button nz-button nzType="dashed" nzSize="small" class="btn-add-item"
+                            (click)="addStep(selectedLesson)">
+                            <span nz-icon nzType="plus"></span> Adicionar Passo
+                        </button>
+                    </div>
+
+                    <!-- Quiz -->
+                    <div *ngIf="selectedLesson.contentType === 'quiz'" class="content-section quiz-section">
+                        <label>Perguntas do Quiz</label>
+                        <div *ngFor="let q of getQuizQuestions(selectedLesson); let qIdx = index" class="quiz-card">
+                            <div class="quiz-header">
+                                <span class="q-number">Questão {{qIdx + 1}}</span>
+                                <button nz-button nzType="text" nzDanger nzSize="small"
+                                    (click)="removeQuestion(selectedLesson, qIdx)">
+                                    <span nz-icon nzType="delete"></span>
+                                </button>
+                            </div>
+                            <input nz-input [(ngModel)]="q.question" placeholder="Digite a pergunta..."
+                                class="q-input" />
+                            <div class="options-label">Opções de resposta:</div>
+                            <div *ngFor="let opt of q.options; let oIdx = index; trackBy: trackByIndex" class="opt-row">
+                                <label class="radio-option">
+                                    <input type="radio" [name]="'q-'+q.id" [checked]="q.correctOptionIndex === oIdx"
+                                        (change)="q.correctOptionIndex = oIdx" />
+                                    <span class="radio-custom"></span>
+                                </label>
+                                <input nz-input [(ngModel)]="q.options[oIdx]" placeholder="Opção {{oIdx + 1}}" />
+                            </div>
+                            <small class="field-hint">Selecione o círculo da resposta correta</small>
+                        </div>
+                        <button nz-button nzType="dashed" nzSize="small" class="btn-add-item"
+                            (click)="addQuestion(selectedLesson)">
+                            <span nz-icon nzType="plus"></span> Adicionar Pergunta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

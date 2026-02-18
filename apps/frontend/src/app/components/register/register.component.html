@@ -1,0 +1,101 @@
+<div class="register-wrapper">
+    <div class="register-card fade-in">
+        <div class="brand-header">
+            <div class="logo">basic.</div>
+            <p class="subtitle">Crie sua conta para acessar os cursos.</p>
+        </div>
+
+        <!-- Step 1: Invite Code -->
+        <div *ngIf="step === 1" class="step-content">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Código de Convite
+            </div>
+            <p class="step-desc">Insira o código fornecido pela administração.</p>
+
+            <div class="code-input-wrapper">
+                <input [(ngModel)]="inviteCode" placeholder="Ex: ABCD1234" class="code-input"
+                    (keyup.enter)="validateCode()" [class.error]="codeError" />
+                <span *ngIf="isValidating" nz-icon nzType="loading" class="loading-icon"></span>
+                <span *ngIf="codeValid" nz-icon nzType="check-circle" class="valid-icon"></span>
+            </div>
+
+            <p *ngIf="codeError" class="error-msg">{{ codeError }}</p>
+
+            <button *ngIf="inviteCode" nz-button nzBlock [disabled]="isValidating" (click)="validateCode()"
+                class="btn-next">
+                Validar Código
+            </button>
+
+            <div class="help-text">
+                Não tem um código? <a routerLink="/login">Entre em contato</a>
+            </div>
+        </div>
+
+        <!-- Step 2: Account Info -->
+        <div *ngIf="step === 2" class="step-content">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Seus Dados
+            </div>
+
+            <form (ngSubmit)="register()">
+                <div class="form-group">
+                    <label>Nome Completo *</label>
+                    <input nz-input [(ngModel)]="name" name="name" placeholder="Maria Silva" required />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input nz-input [(ngModel)]="email" name="email" type="email" placeholder="seu@email.com"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone / WhatsApp *</label>
+                        <input nz-input [(ngModel)]="phone" name="phone" placeholder="(11) 99999-0000" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <input nz-input [(ngModel)]="address" name="address" placeholder="Rua, número, bairro" />
+                </div>
+
+                <div class="form-group">
+                    <label>Cidade / Estado</label>
+                    <input nz-input [(ngModel)]="city" name="city" placeholder="São Paulo, SP" />
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Senha *</label>
+                        <input nz-input [(ngModel)]="password" name="password" type="password"
+                            placeholder="Mínimo 6 caracteres" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Senha *</label>
+                        <input nz-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password"
+                            placeholder="Repita a senha" required />
+                    </div>
+                </div>
+
+                <p *ngIf="registerError" class="error-msg">{{ registerError }}</p>
+
+                <button nz-button nzType="primary" nzBlock [nzLoading]="isLoading" class="btn-submit">
+                    Criar Minha Conta
+                </button>
+            </form>
+
+            <button nz-button nzType="text" (click)="step = 1" class="btn-back">
+                <span nz-icon nzType="arrow-left"></span> Voltar
+            </button>
+        </div>
+
+        <div class="login-link">
+            Já tem conta? <a routerLink="/login">Faça login</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,710 @@
+/* ADMIN COURSE MANAGER - DARK LUXURY FLIP */
+.page-container {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-color);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+    
+    .page-title {
+        font-family: var(--font-serif);
+        font-size: 2.5rem;
+        font-weight: 400;
+        color: #fff !important;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: -0.02em;
+    }
+    .page-subtitle {
+        color: var(--text-muted);
+        margin: 0;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+    }
+
+    .btn-create {
+        height: 48px;
+        padding: 0 32px;
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        background: var(--primary-color) !important;
+        border: 1px solid var(--primary-color) !important;
+        color: #000 !important;
+        transition: var(--transition-lux);
+        border-radius: 0;
+        
+        &:hover { 
+            background: transparent !important; 
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 10px 30px rgba(229, 213, 176, 0.15);
+        }
+    }
+}
+
+/* TABLE STYLES - DEEP OVERRIDES */
+.table-card {
+    background: transparent !important;
+    border: none !important;
+    margin-bottom: 2.5rem !important;
+
+    ::ng-deep .ant-table {
+        background: transparent !important;
+        color: var(--text-muted);
+        
+        &-thead > tr > th {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            color: var(--primary-color) !important;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+            padding: 1.2rem 1rem;
+        }
+
+        &-tbody > tr > td {
+            background: transparent !important;
+            border-bottom: 1px solid var(--border-subtle) !important;
+            transition: var(--transition-lux);
+            padding: 2rem 1.5rem !important; /* Increased padding */
+            color: var(--text-muted);
+        }
+
+        &-tbody > tr:hover > td {
+            background: rgba(229, 213, 176, 0.04) !important; /* Slightly brighter hover */
+        }
+    }
+}
+
+/* EDITOR STYLES */
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+
+    .btn-back {
+        height: auto;
+        padding: 0;
+        border: none !important;
+        background: transparent !important;
+        color: var(--text-muted) !important;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        &:hover { color: #fff !important; transform: translateX(-5px); }
+    }
+
+    .editor-title {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        margin: 0;
+        color: #fff !important;
+    }
+
+    .btn-save {
+        height: 48px;
+        padding: 0 40px;
+        background: transparent !important;
+        border: 1px solid var(--primary-color) !important;
+        color: var(--primary-color) !important;
+        border-radius: 0;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        &:hover {
+            background: var(--primary-color) !important;
+            color: #000 !important;
+            box-shadow: 0 0 30px rgba(229, 213, 176, 0.2);
+        }
+    }
+}
+
+.editor-layout {
+    display: flex;
+    gap: 3rem;
+    padding-bottom: 5rem;
+}
+
+/* SIDEBAR & FORM COMPONENTS */
+.editor-sidebar {
+    width: 380px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-color);
+    height: fit-content;
+
+    ::ng-deep .ant-tabs-nav {
+        margin: 0;
+        padding: 0 1rem;
+        border-bottom: 1px solid var(--border-subtle);
+        
+        .ant-tabs-tab {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1rem;
+            
+            &-active .ant-tabs-tab-btn {
+                color: var(--primary-color) !important;
+                text-shadow: 0 0 15px rgba(229, 213, 176, 0.4);
+            }
+        }
+        .ant-tabs-ink-bar { background: var(--primary-color) !important; }
+    }
+
+    .form-section { padding: 2.5rem 2rem; }
+    .structure-section {
+        padding: 1.5rem;
+        
+        /* Add Module Button matching the theme */
+        > button {
+            border: 1px solid var(--border-color) !important;
+            color: var(--primary-color) !important;
+            height: 45px;
+            width: 100%;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            background: transparent !important;
+            transition: var(--transition-lux);
+            
+            &:hover {
+                border-color: var(--primary-color) !important;
+                background: rgba(229, 213, 176, 0.05) !important;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+        }
+
+        /* Collapse Styling Deep Overrides */
+        .module-collapse {
+            background: transparent !important;
+            border: none;
+            
+            ::ng-deep .ant-collapse-item {
+                border-bottom: 1px solid var(--border-color) !important;
+                margin-bottom: 0.5rem;
+                background: transparent !important;
+            }
+
+            ::ng-deep .ant-collapse-header {
+                color: rgba(255,255,255,0.9) !important;
+                font-family: var(--font-serif);
+                font-size: 0.95rem;
+                padding: 12px 0 !important;
+                display: flex;
+                align-items: center;
+                
+                .ant-collapse-arrow {
+                    color: var(--primary-color) !important;
+                    font-size: 0.7rem !important;
+                    margin-right: 10px !important;
+                    position: static !important; /* Fix arrow position */
+                    transform: none !important;
+                    display: inline-block;
+                    
+                    svg { transform: rotate(-90deg); transition: transform 0.3s; }
+                }
+                
+                &[aria-expanded="true"] .ant-collapse-arrow svg {
+                    transform: rotate(0deg);
+                }
+            }
+
+            ::ng-deep .ant-collapse-content {
+                background: transparent !important;
+                border-top: none !important;
+                color: var(--text-muted);
+                
+                .ant-collapse-content-box {
+                    padding: 0 0 1.5rem 0 !important;
+                }
+            }
+        }
+
+        /* Module Header Edit Mode used inside collapse */
+        .module-head {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            
+            input {
+                flex: 1;
+                background: transparent !important;
+                border: none !important;
+                color: #fff !important;
+                font-size: 0.85rem;
+                box-shadow: none !important;
+                padding: 0 4px !important;
+                height: auto !important;
+            }
+            
+            button {
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none !important;
+                background: transparent !important;
+                color: #ff4d4f !important;
+                opacity: 0.7;
+                padding: 0 !important;
+                
+                &:hover { opacity: 1; background: rgba(255, 77, 79, 0.1) !important; }
+            }
+        }
+
+        /* Lesson List Styling */
+        .lesson-list {
+            margin-left: 6px;
+            border-left: 1px solid var(--border-color);
+            padding-left: 14px;
+            
+            .lesson-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 12px;
+                cursor: pointer;
+                transition: var(--transition-lux);
+                margin-bottom: 4px;
+                border: 1px solid transparent;
+                color: var(--text-muted);
+                
+                .lesson-icon { font-size: 0.9rem; opacity: 0.6; }
+                .lesson-name { 
+                    font-size: 0.8rem; 
+                    letter-spacing: 0.02em; 
+                    white-space: nowrap; 
+                    overflow: hidden; 
+                    text-overflow: ellipsis; 
+                }
+                
+                &:hover {
+                    background: rgba(255,255,255,0.03);
+                    color: #fff;
+                    .lesson-icon { opacity: 1; color: var(--primary-color); }
+                }
+                
+                &.selected {
+                    background: rgba(229, 213, 176, 0.05);
+                    border-color: var(--border-color);
+                    color: var(--primary-color);
+                    .lesson-icon { opacity: 1; color: var(--primary-color); }
+                }
+            }
+            
+            .btn-add-lesson {
+                width: 100%;
+                margin-top: 10px;
+                text-align: left;
+                padding: 10px 14px !important;
+                height: auto !important;
+                color: var(--text-muted) !important;
+                font-size: 0.65rem !important;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                border: 1px dashed var(--border-color) !important;
+                background: transparent !important;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                
+                &:hover {
+                    color: var(--primary-color) !important;
+                    border-color: var(--primary-color) !important;
+                    background: rgba(229, 213, 176, 0.05) !important;
+                }
+            }
+        }
+    }
+}
+
+/* GLOBAL FORM & INPUT OVERRIDES FOR THIS PAGE */
+::ng-deep {
+    /* Inputs */
+    .ant-input, .ant-input-textarea {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid var(--border-color) !important;
+        color: #fff !important;
+        border-radius: 0 !important;
+        padding: 10px 15px !important;
+        font-family: var(--font-sans);
+        
+        &:focus {
+            border-color: var(--primary-color) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            box-shadow: none !important;
+        }
+
+        &::placeholder { color: rgba(255, 255, 255, 0.2) !important; }
+    }
+
+    /* Selects */
+    .ant-select-selector {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid var(--border-color) !important;
+        color: #fff !important;
+        border-radius: 0 !important;
+        height: 42px !important;
+        display: flex;
+        align-items: center;
+    }
+    
+    .ant-select-arrow { color: var(--primary-color) !important; }
+    
+    /* Ensure Dropdowns attached to body are also dark via global styles or careful selection */
+    /* Note: Since dropdowns attach to body, these styles might need to be global. 
+       But we can try to scope them if possible or accept they need to be in styles.scss if this doesn't work.
+       However, usually ng-deep works if the dropdown is a child, but nz-select moves it. 
+       We will rely on styles.scss fix or this deep selector hitting if structure permits. */
+    
+    .ant-select-dropdown {
+        background: #0A0A0A !important;
+        border: 1px solid var(--border-color) !important;
+        
+        .ant-select-item {
+            color: var(--text-muted) !important;
+            &-option-active {
+                background: rgba(229, 213, 176, 0.1) !important;
+                color: var(--primary-color) !important;
+            }
+            &-option-selected {
+                background: var(--primary-color) !important;
+                color: #000 !important;
+            }
+        }
+    }
+
+    /* Collapse */
+    .ant-collapse {
+        background: transparent !important;
+        border: none !important;
+        
+        &-item {
+            border-bottom: 1px solid var(--border-subtle) !important;
+            background: transparent !important;
+        }
+        
+        &-header {
+            color: #fff !important; /* Module Title Color */
+            background: transparent !important;
+            padding: 16px 0 !important;
+            font-size: 0.9rem !important;
+            font-family: var(--font-serif);
+        }
+        
+        &-content {
+            background: rgba(0,0,0,0.2) !important;
+            color: var(--text-muted) !important;
+            border-top: 1px solid var(--border-subtle) !important;
+        }
+    }
+
+    /* Radio */
+    .ant-radio-wrapper {
+        color: var(--text-muted) !important;
+        font-size: 0.85rem;
+        
+        &:hover span { color: var(--primary-color); }
+        
+        .ant-radio-inner {
+            background: transparent !important;
+            border-color: var(--text-muted) !important;
+            &::after { background-color: var(--primary-color); }
+        }
+        
+        &-checked .ant-radio-inner {
+            border-color: var(--primary-color) !important;
+        }
+    }
+
+    /* Upload - Fixed Container for Sidebar */
+    .thumb-upload {
+        display: block;
+        margin-bottom: 0;
+        position: relative;
+
+        &.is-uploading {
+            pointer-events: none;
+            opacity: 0.8;
+            border-color: var(--primary-color) !important;
+        }
+
+        .loader-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            gap: 10px;
+            
+            .loader-icon { font-size: 1.5rem; }
+            p { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+        }
+
+        ::ng-deep .ant-upload.ant-upload-drag {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px dashed var(--border-color) !important;
+            width: 100%;
+            height: 200px !important; /* Force height */
+            padding: 0 !important;
+            overflow: hidden; /* Cut off dragging image */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-lux);
+            border-radius: 0 !important;
+            
+            &:hover {
+                border-color: var(--primary-color) !important;
+                background: rgba(229, 213, 176, 0.05) !important;
+            }
+
+            .ant-upload-btn {
+                padding: 0 !important;
+                height: 100% !important;
+                width: 100% !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
+        .thumb-preview { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block;
+        }
+        
+        .thumb-placeholder { 
+            font-size: 2rem; 
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+/* Form Groups Layout */
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+    
+    label {
+        display: block;
+        color: var(--primary-color);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+}
+
+/* Thumbnails in List */
+.thumb-wrapper {
+    width: 200px; 
+    height: 120px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    background: #000;
+    img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9); transition: transform 0.3s; }
+    &:hover img { transform: scale(1.1); }
+}
+
+/* Course Info in List */
+.course-info {
+    .course-title { 
+        display: block; color: #fff; font-family: var(--font-serif); 
+        font-size: 1.4rem; margin-bottom: 8px; line-height: 1.2;
+        letter-spacing: -0.01em;
+    }
+    .course-desc { 
+        display: block; color: var(--text-muted); font-size: 0.85rem; 
+        max-width: 500px; line-height: 1.5;
+        opacity: 0.8;
+    }
+}
+
+.custom-tag {
+    background: rgba(229, 213, 176, 0.1) !important;
+    border: 1px solid rgba(229, 213, 176, 0.2) !important;
+    color: var(--primary-color) !important;
+    font-size: 0.6rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 10px !important;
+    border-radius: 0 !important;
+}
+
+.status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--primary-color);
+    .dot { width: 5px; height: 5px; background: var(--primary-color); border-radius: 50%; box-shadow: 0 0 8px var(--primary-color); }
+}
+
+.action-btns button {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: var(--text-muted) !important;
+    &:hover { color: var(--primary-color) !important; border-color: var(--border-color) !important; }
+}
+
+/* EDITOR MAIN AREA */
+.editor-main {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-color);
+    padding: 3rem;
+    min-height: 600px;
+
+    .empty-editor {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        height: 100%; color: var(--text-muted); opacity: 0.5;
+        .empty-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+    }
+
+    .lesson-title-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        color: #fff;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0;
+        
+        &:focus { outline: none; border-color: var(--primary-color); }
+    }
+
+    .lesson-meta {
+        display: flex; gap: 1.5rem; margin-bottom: 2.5rem;
+    }
+
+    .content-section {
+        margin-top: 2rem;
+        
+        label {
+            display: block; color: var(--primary-color); font-size: 0.7rem; 
+            text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem;
+        }
+
+        .video-options {
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+    }
+    
+    .text-editor {
+        font-family: 'Courier New', monospace;
+        line-height: 1.6;
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .editor-layout { flex-direction: column; }
+    .editor-sidebar { width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column; align-items: flex-start;
+        .btn-create { width: 100%; margin-top: 2rem; }
+    }
+    .lesson-meta { flex-direction: column; }
+}
+
+/* BENEFITS STYLES */
+.add-benefit-btn {
+    margin-bottom: 2rem;
+    height: 48px;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: var(--primary-color) !important;
+    border-color: var(--border-color) !important;
+    text-transform: uppercase;
+    
+    &:hover, &:focus { 
+        background: rgba(229, 213, 176, 0.05) !important; 
+        border-color: var(--primary-color) !important;
+        color: var(--primary-color) !important;
+    }
+}
+
+.benefit-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.4s ease-out;
+    
+    .benefit-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        
+        button {
+            background: transparent !important;
+            border: none;
+            color: #ff4d4f;
+            opacity: 0.7;
+            &:hover { opacity: 1; background: rgba(255,77,79,0.1) !important; }
+        }
+
+        .benefit-label {
+            font-size: 0.7rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+    }
+    
+    .benefit-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        
+        input, textarea {
+            font-size: 0.85rem;
+            background: rgba(0,0,0,0.3) !important;
+            border-color: var(--border-color) !important;
+            &:focus { border-color: var(--primary-color) !important; }
+        }
+    }
+}

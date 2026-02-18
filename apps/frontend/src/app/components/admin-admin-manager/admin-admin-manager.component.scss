@@ -1,0 +1,282 @@
+/* ADMIN ADMIN MANAGER - DARK LUXURY FLIP */
+.page-container {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-color);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+    
+    .page-title {
+        font-family: var(--font-serif);
+        font-size: 2.5rem;
+        font-weight: 400;
+        color: #fff !important;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: -0.02em;
+    }
+    .page-subtitle {
+        color: var(--text-muted);
+        margin: 0;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+    }
+
+    .btn-create {
+        height: 48px;
+        padding: 0 32px;
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        background: var(--primary-color) !important;
+        border: 1px solid var(--primary-color) !important;
+        color: #000 !important;
+        transition: var(--transition-lux);
+        border-radius: 0;
+        
+        &:hover { 
+            background: transparent !important; 
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 10px 30px rgba(229, 213, 176, 0.15);
+        }
+    }
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 5rem;
+    
+    .stat-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-color);
+        padding: 2rem 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        transition: var(--transition-lux);
+        
+        &:hover { 
+            border-color: var(--primary-color);
+            background: rgba(229, 213, 176, 0.03);
+        }
+        
+        .stat-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(229, 213, 176, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .stat-info {
+            .stat-number { 
+                display: block;
+                color: #fff; 
+                font-size: 2.5rem; 
+                font-family: var(--font-serif); 
+                line-height: 1;
+                margin-bottom: 0.25rem;
+            }
+            .stat-label { 
+                display: block;
+                color: var(--text-muted); 
+                font-size: 0.6rem; 
+                text-transform: uppercase; 
+                letter-spacing: 0.2em; 
+            }
+        }
+    }
+}
+
+.section-card {
+    background: var(--background-alt) !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 3rem !important;
+    margin-bottom: 3rem !important;
+    .section-heading { font-family: var(--font-serif); font-size: 1.5rem; color: #fff; margin-bottom: 2rem; }
+}
+
+.admins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.admin-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-lux);
+    position: relative;
+    overflow: hidden;
+    
+    &:hover { 
+        border-color: var(--primary-color);
+        background: rgba(229, 213, 176, 0.02);
+    }
+    
+    .admin-top {
+        padding: 2rem 2rem 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        
+        .admin-avatar { 
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color); 
+            color: #000;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+        }
+
+        .admin-badge {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding: 4px 12px;
+            border: 1px solid rgba(229, 213, 176, 0.2);
+            color: var(--primary-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+    
+    .admin-body {
+        padding: 1rem 2rem 2rem 2rem;
+        
+        .admin-name { 
+            color: #fff; 
+            font-size: 1.25rem; 
+            font-family: var(--font-serif); 
+            margin-bottom: 0.5rem;
+        }
+        .admin-email { 
+            color: var(--text-muted); 
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-role {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary-color);
+            background: rgba(229, 213, 176, 0.1);
+            padding: 4px 12px;
+        }
+    }
+
+    .admin-footer {
+        padding: 1.5rem 2rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        min-height: 70px;
+        
+        .protected-text {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+}
+
+::ng-deep {
+    .ant-modal-content {
+        background: var(--background-alt) !important;
+        color: var(--text-color) !important;
+        border: 1px solid var(--border-color) !important;
+        padding: 2.5rem !important;
+    }
+    .ant-modal-header { 
+        background: transparent !important; 
+        border-bottom: 1px solid var(--border-color) !important;
+        padding: 0 0 1.5rem 0 !important;
+        margin-bottom: 2rem;
+    }
+    .ant-modal-title { 
+        color: #fff !important; 
+        font-family: var(--font-serif) !important; 
+        font-size: 1.5rem !important;
+    }
+    .ant-modal-close {
+        color: var(--text-muted) !important;
+        top: 20px !important;
+        right: 20px !important;
+    }
+
+    .form-group {
+        margin-bottom: 2rem !important;
+        
+        label {
+            display: block;
+            color: var(--primary-color) !important;
+            font-size: 0.65rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.2em !important;
+            margin-bottom: 0.8rem !important;
+            font-weight: 500 !important;
+        }
+
+        .ant-input {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid var(--border-color) !important;
+            color: #fff !important;
+            padding: 14px 18px !important;
+            font-size: 0.9rem;
+            border-radius: 0 !important;
+            
+            &:focus { 
+                border-color: var(--primary-color) !important; 
+                background: rgba(255, 255, 255, 0.04) !important;
+            }
+        }
+    }
+
+    .btn-create-admin {
+        height: 54px !important;
+        margin-top: 1rem;
+        background: transparent !important;
+        border-color: var(--primary-color) !important;
+        color: var(--primary-color) !important;
+        letter-spacing: 0.25em !important;
+        font-size: 0.7rem !important;
+        transition: var(--transition-lux) !important;
+        
+        &:hover {
+            background: var(--primary-color) !important;
+            color: #000 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(229, 213, 176, 0.15);
+        }
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .page-header { flex-direction: column; align-items: flex-start; .btn-create { width: 100%; margin-top: 1.5rem; } }
+    .stats-row { grid-template-columns: 1fr; }
+}

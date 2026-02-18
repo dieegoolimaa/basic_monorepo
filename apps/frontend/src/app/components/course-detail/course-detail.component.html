@@ -1,0 +1,162 @@
+@if (course(); as c) {
+<div class="detail-page">
+    <!-- HERO SECTION: SPLIT SCREEN -->
+    <section class="hero-split">
+        <div class="hero-text-side">
+            <div class="hero-content-wrapper fade-up">
+                <nav class="breadcrumb-lux">
+                    <a routerLink="/formacoes">FORMAÇÕES</a>
+                    <span class="sep">/</span>
+                    <span class="current">{{ c.title | uppercase }}</span>
+                </nav>
+
+                <div class="title-area">
+                    <span class="category-tag fade-in-delay">FORMAÇÃO EXCLUSIVA</span>
+                    <h1 class="hero-title fade-up-delay-1">{{ c.title }}</h1>
+                    <div class="accent-line fade-up-delay-2"></div>
+                    <p class="hero-subtitle fade-up-delay-3">{{ c.subtitle || 'Domine a arte das unhas com a metodologia
+                        que
+                        revolucionou o mercado europeu.' }}</p>
+                </div>
+
+                <div class="hero-meta fade-up-delay-4">
+                    <div class="meta-item">
+                        <span class="label">Duração das Aulas</span>
+                        <span class="value">{{ getTotalDuration(c) }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Certificação</span>
+                        <span class="value">Profissional Luxo</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Feedback</span>
+                        <span class="value">
+                            <span nz-icon nzType="star" nzTheme="fill" class="star-icon"></span>
+                            {{ c.averageRating > 0 ? c.averageRating.toFixed(1) : '5.0' }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="hero-cta fade-up-delay-5">
+                    @if (isLoggedIn()) {
+                    @if (hasAccess()) {
+                    <button class="btn-premium" (click)="startCourse(c._id)">
+                        <span class="btn-text">COMEÇAR AGORA</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    } @else {
+                    <a href="https://wa.me/351937299329?text=Olá! Gostaria de adquirir acesso à formação: {{ c.title }}"
+                        target="_blank" class="btn-premium">
+                        <span class="btn-text">SOLICITAR ACESSO</span>
+                        <span class="btn-icon">→</span>
+                    </a>
+                    }
+                    } @else {
+                    <button class="btn-premium" routerLink="/login" [queryParams]="{returnUrl: '/formacoes/' + c._id}">
+                        <span class="btn-text">ENTRAR E ACESSAR</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-image-side reveal">
+            <div class="image-zoom-container">
+                <img [src]="getFullUrl(c.imageUrl || c.thumbnailUrl)" [alt]="c.title"
+                    onerror="this.src='https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&auto=format'" />
+                <div class="image-overlay"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT SECTION -->
+    <div class="content-container container">
+        <div class="content-grid">
+            <!-- Left: Description & Modules -->
+            <div class="main-content">
+                <section class="about-module reveal">
+                    <h2 class="section-heading serif italic">A Essência da Técnica</h2>
+                    <div class="description-lux">
+                        <p class="lead-text">{{ c.description }}</p>
+                        <p>Cada módulo desta formação foi meticulosamente desenhado para transformar sua percepção
+                            técnica. Não apenas ensinamos o "como", mas mergulhamos no "porquê", garantindo que você se
+                            torne uma autoridade no mercado.</p>
+                    </div>
+                </section>
+
+                <section class="curriculum-lux reveal" *ngIf="c.modules.length > 0">
+                    <h2 class="section-heading serif">Programa Geral</h2>
+                    <div class="modules-list">
+                        @for(mod of c.modules; track mod.id; let i = $index) {
+                        <details class="module-item reveal">
+                            <summary class="module-summary">
+                                <div class="module-number">{{ (i + 1).toString().padStart(2, '0') }}</div>
+                                <div class="module-info">
+                                    <h3 class="module-title">{{ mod.title }}</h3>
+                                    <span class="module-meta">{{ mod.lessons.length }} aulas exclusivas</span>
+                                </div>
+                                <span class="expand-icon">+</span>
+                            </summary>
+                            <div class="module-description fade-in">
+                                <p>{{ mod.description || 'Este módulo aprofunda os conhecimentos essenciais para sua
+                                    jornada, abordando técnicas exclusivas e práticas fundamentais.' }}</p>
+                            </div>
+                            <div class="module-line"></div>
+                        </details>
+                        }
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right: Benefits & Support -->
+            <aside class="sidebar-lux reveal">
+                <div class="sticky-box">
+                    <div class="benefit-card-lux">
+                        <h3 class="serif italic">Privilégios Inclusos</h3>
+                        <ul class="benefits-lux">
+                            <li>
+                                <span class="b-icon">✦</span>
+                                <div class="b-text">
+                                    <span class="b-title">Acesso Ilimitado</span>
+                                    <span class="b-desc">Estude no seu ritmo, para sempre.</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="b-icon">✦</span>
+                                <div class="b-text">
+                                    <span class="b-title">Selo de Excelência</span>
+                                    <span class="b-desc">Certificado reconhecido internacionalmente.</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="b-icon">✦</span>
+                                <div class="b-text">
+                                    <span class="b-title">Material de Apoio</span>
+                                    <span class="b-desc">Guias práticos em PDF de alta qualidade.</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="b-icon">✦</span>
+                                <div class="b-text">
+                                    <span class="b-title">Círculo Privado</span>
+                                    <span class="b-desc">Comunidade exclusiva para networking.</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="sidebar-footer">
+                            <p class="support-text">Precisas de ajuda personalizada?</p>
+                            <div class="support-links">
+                                <a href="https://wa.me/351937299329" target="_blank">WHATSAPP</a>
+                                <span class="dot">•</span>
+                                <a href="https://instagram.com/basic.studio7" target="_blank">INSTAGRAM</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+}
