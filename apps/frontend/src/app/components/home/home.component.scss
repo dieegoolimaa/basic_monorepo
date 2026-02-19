@@ -88,6 +88,13 @@
             writing-mode: vertical-rl;
             margin-top: 10px;
         }
+
+        @media (max-width: 768px) {
+            bottom: 2rem;
+            right: 2rem;
+            scale: 0.8;
+            opacity: 0.5;
+        }
         
         .mouse {
             width: 1px;
@@ -607,7 +614,10 @@
             
             span { font-size: 0.55rem; letter-spacing: 0.3em; }
         }
-        .hero-main-title { font-size: 18vw; }
+        .hero-main-title { 
+            font-size: clamp(3rem, 20vw, 6rem); 
+            line-height: 0.9;
+        }
     }
 
     .luxury-showcase { padding: 6rem 0; }
@@ -650,8 +660,10 @@
     .about-section {
         .about-content-side {
             .stats-elegant {
-                flex-direction: column;
-                gap: 2rem;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                margin-top: 3rem;
             }
         }
     }

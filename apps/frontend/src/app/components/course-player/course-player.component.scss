@@ -30,6 +30,20 @@
     &:active { transform: scale(0.9); }
 }
 
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+    
+    @media (max-width: 991px) {
+        display: block;
+    }
+}
+
 /* SIDEBAR LUX */
 .sidebar {
     background: #080808;
@@ -43,6 +57,20 @@
     .sidebar-header {
         padding: 4rem 3rem 3rem;
         border-bottom: 1px solid var(--border-color);
+        position: relative;
+        
+        .mobile-close-btn {
+            display: none;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            
+            @media (max-width: 991px) { display: block; }
+        }
         
         .player-logo {
             font-family: var(--font-serif);
@@ -519,4 +547,8 @@
 @media (max-width: 480px) {
     .content-header .text-header h1 { font-size: 1.8rem; }
     .lesson-description { font-size: 1.1rem; margin-bottom: 3rem; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

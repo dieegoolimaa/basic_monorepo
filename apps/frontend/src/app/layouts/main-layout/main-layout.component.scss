@@ -36,9 +36,9 @@ $header-height-mobile: 70px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        max-width: 1400px; /* Reduced for better focus */
+        max-width: 1400px;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 var(--site-gutter);
         position: relative;
     }
 
@@ -213,12 +213,8 @@ $header-height-mobile: 70px;
 @media (max-width: 991px) {
     .site-header {
         height: $header-height-mobile;
-        background: #050505; /* Solid background for certainty on mobile */
+        background: #050505;
         border-bottom: 1px solid rgba(229, 213, 176, 0.1);
-        
-        .header-container {
-            padding: 0 1.25rem;
-        }
     }
 
     .desktop-only { display: none !important; }

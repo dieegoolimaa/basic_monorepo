@@ -4,9 +4,15 @@
         <span nz-icon [nzType]="isSidebarOpen() ? 'close' : 'menu-unfold'"></span>
     </button>
 
+    <!-- MOBILE BACKDROP -->
+    <div class="sidebar-backdrop" *ngIf="isSidebarOpen()" (click)="isSidebarOpen.set(false)"></div>
+
     <!-- SIDEBAR -->
     <aside class="sidebar" [class.mobile-open]="isSidebarOpen()">
         <div class="sidebar-header">
+            <button class="mobile-close-btn" (click)="isSidebarOpen.set(false)">
+                <span nz-icon nzType="close"></span>
+            </button>
             <div class="player-logo">basic<span>.</span></div>
             <div class="progress-info">
                 <span class="lesson-count">{{ completedLessons().length }}/{{ getTotalLessons() }} AULAS</span>

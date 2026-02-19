@@ -116,18 +116,19 @@ $radius: 10px;
         .btn-next {
             height: 60px;
             background: var(--primary-color) !important;
-            border: 1px solid var(--primary-color) !important;
+            border: none !important;
             color: #000 !important;
             font-size: 0.75rem !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
             letter-spacing: 0.35em !important;
             text-transform: uppercase !important;
-            border-radius: 0 !important;
+            border-radius: 4px;
             transition: var(--transition-lux) !important;
             
             &:hover:not(:disabled) {
-                background: transparent !important;
-                color: var(--primary-color) !important;
+                background: #fff !important;
+                color: #000 !important;
+                box-shadow: 0 10px 30px rgba(229, 213, 176, 0.3);
             }
             
             &:disabled {
@@ -205,18 +206,19 @@ $radius: 10px;
         .btn-submit {
             height: 60px;
             background: var(--primary-color) !important;
-            border: 1px solid var(--primary-color) !important;
+            border: none !important;
             color: #000 !important;
             font-size: 0.75rem !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
             letter-spacing: 0.35em !important;
             text-transform: uppercase !important;
-            border-radius: 0 !important;
+            border-radius: 4px;
             transition: var(--transition-lux) !important;
             
             &:hover {
-                background: transparent !important;
-                color: var(--primary-color) !important;
+                background: #fff !important;
+                color: #000 !important;
+                box-shadow: 0 10px 30px rgba(229, 213, 176, 0.3);
             }
         }
         
@@ -264,10 +266,13 @@ $radius: 10px;
     .register-wrapper {
         padding: 0;
         .register-card {
-            height: 100vh;
+            min-height: 100vh;
             max-width: 100%;
-            padding: 4rem 2rem;
+            padding: 4rem 2rem calc(4rem + env(safe-area-inset-bottom));
             border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             overflow-y: auto;
             
             .brand-header {
