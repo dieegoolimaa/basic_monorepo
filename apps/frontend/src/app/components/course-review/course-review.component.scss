@@ -147,7 +147,7 @@
 
             span {
                 font-size: 2.4rem;
-                color: rgba(255, 255, 255, 0.08);
+                color: rgba(255, 255, 255, 0.15); /* Increased default visibility */
                 transition: inherit;
             }
 
@@ -196,23 +196,23 @@
         position: relative;
         
         textarea {
-            background: rgba(255, 255, 255, 0.02) !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid rgba(229, 213, 176, 0.2) !important;
             border-radius: 0 !important;
             color: #fff !important;
-            font-size: 1rem;
-            padding: 1.2rem;
+            font-size: 0.95rem;
+            padding: 1.5rem !important; /* Increased padding */
             transition: all 0.3s ease;
-            min-height: 120px;
+            min-height: 140px;
 
             &:focus {
-                background: rgba(255, 255, 255, 0.04) !important;
-                border-color: rgba(229, 213, 176, 0.4) !important;
+                background: rgba(255, 255, 255, 0.06) !important;
+                border-color: rgba(229, 213, 176, 0.5) !important;
                 box-shadow: none !important;
             }
 
             &::placeholder {
-                color: rgba(255, 255, 255, 0.15);
+                color: rgba(255, 255, 255, 0.2);
             }
         }
     }

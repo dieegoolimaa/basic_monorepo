@@ -132,8 +132,8 @@ p {
 /* BUTTONS */
 button, .btn {
   font-family: var(--font-sans);
-  font-weight: 400;
-  letter-spacing: 0.2em;
+  font-weight: 600; /* Bolder for accessibility */
+  letter-spacing: 0.15em;
   transition: var(--transition-lux);
   cursor: pointer;
   text-transform: uppercase;
@@ -154,9 +154,9 @@ button, .btn {
   
   &:hover {
     background: var(--primary-color) !important;
-    color: #000 !important;
+    color: #000 !important; /* Ensure black text on gold */
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(229, 213, 176, 0.15);
+    box-shadow: 0 10px 30px rgba(229, 213, 176, 0.25);
   }
 
   &:disabled {
@@ -182,21 +182,25 @@ button, .btn {
 }
 
 /* INPUTS */
-.nz-input, [nz-input] {
-  background: transparent !important;
+.nz-input, [nz-input], textarea {
+  background: rgba(255, 255, 255, 0.03) !important;
   border: none !important;
   border-bottom: 1px solid var(--border-color) !important;
   border-radius: 0 !important;
   color: var(--text-color) !important;
-  padding: 12px 0 !important;
+  padding: 14px 18px !important; /* Increased padding as requested */
+  font-family: var(--font-sans);
+  font-weight: 300;
+  transition: var(--transition-lux);
   
   &:focus {
+    background: rgba(255, 255, 255, 0.07) !important;
     border-bottom-color: var(--primary-color) !important;
     box-shadow: none !important;
   }
   
   &::placeholder {
-    color: var(--text-muted) !important;
+    color: rgba(255, 255, 255, 0.2) !important;
   }
 }
 

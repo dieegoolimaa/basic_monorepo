@@ -173,8 +173,9 @@ export class CoursePlayerComponent implements OnInit {
         this.completedLessons.update(lessons => [...lessons, lesson.id]);
         this.message.success('Aula concluída! 🎉');
 
-        // Check if course is complete AND user hasn't reviewed yet
-        if (this.isCourseComplete() && !this.hasReviewed()) {
+        // Check if this was the last lesson AND user hasn't reviewed yet
+        const isLast = this.isLastLesson(lesson.id);
+        if (isLast && !this.hasReviewed()) {
           this.showReviewModal.set(true);
         } else {
           this.nextLesson();
@@ -190,15 +191,31 @@ export class CoursePlayerComponent implements OnInit {
     const course = this.course();
     if (!course) return false;
 
-    const totalLessons = this.getTotalLessons();
-    const completed = this.completedLessons().length;
-    return completed >= totalLessons;
+    const allCourseLessonIds = course.modules.flatMap(m => m.lessons.map(l => l.id));
+    const completedInThisCourse = this.completedLessons().filter(id => allCourseLessonIds.includes(id));
+
+    return allCourseLessonIds.length > 0 && completedInThisCourse.length >= allCourseLessonIds.length;
   }
 
   getProgress(): number {
+    const course = this.course();
+    if (!course) return 0;
+
     const total = this.getTotalLessons();
     if (total === 0) return 0;
-    return Math.round((this.completedLessons().length / total) * 100);
+
+    const allCourseLessonIds = course.modules.flatMap(m => m.lessons.map(l => l.id));
+    const completedInThisCourse = this.completedLessons().filter(id => allCourseLessonIds.includes(id));
+
+    return Math.round((completedInThisCourse.length / total) * 100);
+  }
+
+  isLastLesson(lessonId: string): boolean {
+    const course = this.course();
+    if (!course || course.modules.length === 0) return false;
+    const lastModule = course.modules[course.modules.length - 1];
+    const lastLesson = lastModule.lessons[lastModule.lessons.length - 1];
+    return lastLesson?.id === lessonId;
   }
 
   nextLesson() {

@@ -117,16 +117,19 @@
     .btn-save {
         height: 48px;
         padding: 0 40px;
-        background: transparent !important;
-        border: 1px solid var(--primary-color) !important;
-        color: var(--primary-color) !important;
-        border-radius: 0;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
+        background: var(--primary-color) !important; /* Solid gold */
+        border: none !important;
+        color: #000 !important; /* Black text */
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        
         &:hover {
-            background: var(--primary-color) !important;
+            background: #fff !important;
             color: #000 !important;
-            box-shadow: 0 0 30px rgba(229, 213, 176, 0.2);
+            box-shadow: 0 10px 30px rgba(229, 213, 176, 0.3);
+            transform: translateY(-2px);
         }
     }
 }
@@ -158,6 +161,7 @@
             
             &-active .ant-tabs-tab-btn {
                 color: var(--primary-color) !important;
+                font-weight: 600;
                 text-shadow: 0 0 15px rgba(229, 213, 176, 0.4);
             }
         }
