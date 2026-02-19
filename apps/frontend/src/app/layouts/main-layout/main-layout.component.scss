@@ -9,17 +9,18 @@ $header-height-mobile: 70px;
     
     nz-content {
         background-color: var(--background-color) !important;
-        padding-top: $header-height;
+        padding-top: calc(#{$header-height} + env(safe-area-inset-top));
 
         @media (max-width: 991px) {
-            padding-top: $header-height-mobile;
+            padding-top: calc(#{$header-height-mobile} + env(safe-area-inset-top));
         }
     }
 }
 
 /* HEADER */
 .site-header {
-    height: $header-height;
+    height: calc(#{$header-height} + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
     background: rgba(5, 5, 5, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -30,6 +31,10 @@ $header-height-mobile: 70px;
     right: 0;
     z-index: 1000;
     transition: var(--transition-lux);
+
+    @media (max-width: 991px) {
+        height: calc(#{$header-height-mobile} + env(safe-area-inset-top));
+    }
     
     .header-container {
         height: 100%;

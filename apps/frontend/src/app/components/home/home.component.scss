@@ -1,9 +1,9 @@
 /* WELCOME HERO SECTION */
 .welcome-hero {
-    height: calc(100vh + 80px); /* Fill full screen + header space */
-    margin-top: -80px; /* Pull behind the fixed header */
+    height: calc(100vh + 80px + env(safe-area-inset-top)); /* Fill full screen + header space */
+    margin-top: calc(-80px - env(safe-area-inset-top)); /* Pull behind the fixed header */
     background-size: cover;
-    background-position: center top; 
+    background-position: 25% center; /* Adjusted to prioritize left side/person */
     background-repeat: no-repeat;
     background-attachment: initial;
     display: flex;
@@ -13,8 +13,9 @@
     overflow: hidden;
 
     @media (max-width: 991px) {
-        height: calc(100vh + 70px);
-        margin-top: -70px;
+        height: 100vh;
+        margin-top: calc(-70px - env(safe-area-inset-top));
+        background-position: 20% center;
     }
 
     .hero-overlay {
@@ -36,10 +37,11 @@
         justify-content: center;
         align-items: center;
         padding: 0 4vw;
+        padding-top: 80px; /* Offset for internal header spacing */
 
         .hero-top-tags {
             position: absolute;
-            top: 25%;
+            top: 30%; /* Lowered from 25% to avoid navbar collision */
             left: 0;
             right: 0;
             display: flex;
@@ -606,7 +608,7 @@
     /* Existing mobile overrides */
     .hero-content {
         .hero-top-tags {
-            top: 15%;
+            top: 22%; /* Adjusted for mobile to clear safe areas and navbar */
             flex-direction: column;
             gap: 1rem;
             align-items: center;
